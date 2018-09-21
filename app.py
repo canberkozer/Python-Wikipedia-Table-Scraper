@@ -1,7 +1,6 @@
 import urllib.request
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 
 r = requests.get("http://www.wikizero.co/index.php?q=aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvTGlzdF9vZl9Vbml0ZWRfU3RhdGVzX2NpdGllc19ieV9wb3B1bGF0aW9u")
 
@@ -14,11 +13,29 @@ links = table.find_all('a')
 cities = []
 for link in links:
     cities.append(link.get('title'))
+new = []
 
-print(cities)
+for i in cities:
+    try:
+        if len(i) != 0:
+            new.append(i)
+    except:
+        pass
 
 
-df = pd.DataFrame()
-df['City'] = cities
 
-print(df)
+docs = open("cities.txt","w")
+
+a=0
+
+while (a<358):
+
+    if(a==358):
+        docs.close()
+        print('Completed')   
+
+    else:
+        docs.write(new[a])
+        docs.write('\n')
+        a += 1
+        print('Added')
